@@ -10,27 +10,40 @@ el primer individuo con 10 ceros.
 
 import random
 import argparse
-def crear_nueva_poblacion(poblacion_inicial): 
-    nueva_poblacion = list(reversed(poblacion_inicial))
-    return nueva_poblacion
-def crear_cadena(poblacion): 
-    poblacion_cadena = []
-    for cromosoma in poblacion: 
-        poblacion_cadena.append(''.join(cromosoma))
-    return poblacion_cadena
 
-def main(num_crom, num_gen): 
-    poblacion_inicial = []
-    cromosoma = []
-    for i in range(num_crom):
-        cromosoma = []
-        for j in range(num_gen):
-            cromosoma.append(str(random.randint(0,1)))
-            
-        poblacion_inicial.append(cromosoma)
-    nueva_poblacion = crear_nueva_poblacion(poblacion_inicial)
-    poblacion_cadena = crear_cadena(nueva_poblacion)
-    print(poblacion_cadena)
+#recibe 4 cromosomas madre, padre, hijo1, hijo2
+def elegirMejores(*args): 
+    cromosoma_mejor_1 = []
+    cromosoma_mejor_2 = []
+    ordenado = sorted(args, key=lambda x: x.count('0'), reverse=True)
+    cromosoma_mejor_1 = ordenado[0]
+    cromosoma_mejor_2 = ordenado[1]
+    return cromosoma_mejor_1, cromosoma_mejor_2
+
+    
+
+def generaciones(cromosoma_padre, cromosoma_madre, cromosoma_hijo1, cromosoma_hijo2, poblacion, index_p, index_m): 
+    
+    optimo_encontrado = False
+    cromosoma_mejor1, cromosoma_mejor2 = elegirMejores(cromosoma_padre, cromosoma_madre, cromosoma_hijo1, cromosoma_hijo2)
+    
+    poblacion[index_p] = cromosoma_mejor1
+    poblacion[index_m] = cromosoma_mejor2
+
+
+    if cromosoma_madre.count('0') == 10 or cromosoma_padre.count('0') == 10: 
+        optimo_encontrado = True
+
+    return poblacion, optimo_encontrado 
+    
+def main(): 
+    cont = 0
+    optimo_encontrado = False
+    while cont != 250 or optimo_encontrado != True: 
+
+        poblacion, optimo_encontrado = generaciones()
+        pass 
+
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(
