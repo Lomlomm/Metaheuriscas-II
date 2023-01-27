@@ -39,14 +39,14 @@ def ordenar_poblacion(poblacion_strings):
     return poblacion_ordenada
 
 def cruzamiento_aleatorio(poblacion_strings:list):
-    """Funcion que realiza el cruzamiento de la poblacion de dos en dos 
-       con un punto de corte aleatorio"""
+    """Funcion que realiza el cruzamiento de la poblacion tomando 3 pares de cromosomas aletoriamente
+    cruzandolos de dos en dos de manera aleatoria y regresando la nueva poblacion"""
 
     n_chromosomes = len(poblacion_strings)
-    for i in range(0, n_chromosomes//2):
+    for i in range(3):
         # Tomamos los dos cromosomas padres 
-        cromosoma1 = list(poblacion_strings[i])
-        cromosoma2 = list(poblacion_strings[n_chromosomes-i-1])
+        cromosoma1 = list(poblacion_strings[random.randint(0,n_chromosomes-i)])
+        cromosoma2 = list(poblacion_strings[random.randint(0,n_chromosomes-i-1)])
 
         punto_corte = random.randint(1, len(cromosoma1)-2)
         # Generamos los cromosomas hijos a partir del cruzamiento a un punto aleatorio
