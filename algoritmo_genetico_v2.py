@@ -38,7 +38,7 @@ def ordenar_poblacion(poblacion_strings):
     poblacion_ordenada = sorted(poblacion_strings, key=lambda x: x.count('0'), reverse=True)
     return poblacion_ordenada
 
-def cruzamiento_aleratorio(poblacion_strings:list):
+def cruzamiento_aleatorio(poblacion_strings:list):
     """Funcion que realiza el cruzamiento de la poblacion de dos en dos 
        con un punto de corte aleatorio"""
 
@@ -75,7 +75,7 @@ def main(num_crom, num_gen):
         poblacion_inicial.append(cromosoma)
     
     poblacion = ordenar_poblacion(poblacion_inicial)
-    poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleratorio(poblacion)
+    poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
 
     count = 0
     optimo_encontrado = False
@@ -87,7 +87,7 @@ def main(num_crom, num_gen):
         # Ordenamos la nueva población creada del previo cruzamiento 
         poblacion = ordenar_poblacion(poblacion_inicial)
         # Cruzamos la población ordenada 
-        poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleratorio(poblacion)
+        poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
         count += 1 
         if count == 249 or optimo_encontrado == True: 
             break 
