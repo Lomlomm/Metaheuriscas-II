@@ -93,6 +93,7 @@ def main(num_crom, num_gen):
             break 
         
     print(poblacion)
+    print(f"Generacion: {count}")
 
 
 if __name__ == '__main__': 
