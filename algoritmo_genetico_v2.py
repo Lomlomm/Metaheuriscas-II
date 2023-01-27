@@ -27,6 +27,26 @@ def generaciones(cromosoma_padre, cromosoma_madre, cromosoma_hijo1, cromosoma_hi
     optimo_encontrado = False
     cromosoma_mejor1, cromosoma_mejor2 = elegirMejores(cromosoma_padre, cromosoma_madre, cromosoma_hijo1, cromosoma_hijo2)
     
+def ordenar_poblacion(poblacion_strings):
+    """Funcion que ordena la poblacion de mayor a menor
+    conforme al numero de ceros que contenga cada cromosoma"""
+    poblacion_ordenada = []
+    poblacion_ordenada = sorted(poblacion_strings, key=lambda x: x.count('0'), reverse=True)
+    return poblacion_ordenada
+
+def cruzamiento_aleratorio(poblacion_strings:list):
+    """Funcion que realiza el cruzamiento de la poblacion de dos en dos 
+       con un punto de corte aleatorio"""
+    poblacion_cruzada = []
+    n_chromosomes = len(poblacion_strings)
+    for i in range(0, n_chromosomes//2):
+        cromosoma1 = list(poblacion_strings[i])
+        cromosoma2 = list(poblacion_strings[n_chromosomes-i-1])
+        punto_corte = random.randint(1, len(cromosoma1)-2)
+        poblacion_cruzada.append(cromosoma1[punto_corte:]+cromosoma2[:punto_corte])
+        poblacion_cruzada.append(cromosoma2[punto_corte:] + cromosoma1[:punto_corte])
+    return poblacion_cruzada
+
     poblacion[index_p] = cromosoma_mejor1
     poblacion[index_m] = cromosoma_mejor2
 
