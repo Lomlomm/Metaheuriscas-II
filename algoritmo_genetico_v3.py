@@ -105,7 +105,7 @@ def main(num_crom, num_gen):
             break
 
         # Ordenamos la nueva población creada del previo cruzamiento 
-        poblacion = ordenar_poblacion(poblacion_inicial)
+        poblacion = ordenar_poblacion(poblacion)
         # Cruzamos la población ordenada 
         poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
         """print("optimos")
