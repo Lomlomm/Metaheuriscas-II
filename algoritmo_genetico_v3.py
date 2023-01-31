@@ -113,7 +113,8 @@ def main(num_crom, num_gen):
         print(cromosoma_optimo_2)
         print(poblacion)"""
         count += 1  
-        
+
+    poblacion = ordenar_poblacion(poblacion)  
     print(poblacion)
     print(f"Generacion: {count}")
 
