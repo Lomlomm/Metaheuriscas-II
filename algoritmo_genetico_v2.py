@@ -89,11 +89,12 @@ def main(num_crom, num_gen):
         # Cruzamos la población ordenada 
         poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
         count += 1 
-        if count == 249 or optimo_encontrado == True: 
+        if count == 250 or optimo_encontrado == True: 
             break 
         
-    print(poblacion)
     print(f"Generacion: {count}")
+    for chromosome in poblacion:
+        print(chromosome)
 
 
 if __name__ == '__main__': 
