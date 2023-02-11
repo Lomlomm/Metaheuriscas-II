@@ -1,3 +1,4 @@
+# TODO: Implementar la restriccion extra faltante
 import random
 import argparse
 
@@ -14,6 +15,46 @@ def elegirMejores(*args):
         mejores_cromosomas.append(ordenado[i])
     
     return mejores_cromosomas
+
+def mutar(pos_chromosoma:int, poblacion_strings:list):
+    """Funcion que realiza la mutacion de un cromosoma, de un o dos genes dependiendo de un numero aleatorio generado
+
+    Args:
+        pos_chromosoma (int): Posicion del cromosoma a mutar
+        poblacion_strings (list): Lista de cromosomas en formato list
+
+    Returns:
+        list: Lista de cromosomas con el cromosoma mutado en formato list
+    """
+    # Numero aleatorio entre 1 y 20
+    num = random.randint(1, 20)
+
+    # Numero de genes a mutar
+    num_genes = 1 if num <= 10 else 2
+
+    for i in range(num_genes):
+        # Seleccionamos un gen al azar
+        gen = random.randint(0, len(poblacion_strings[pos_chromosoma]) - 1)
+        # Mutamos el gen
+        poblacion_strings[pos_chromosoma][gen] = '0' if poblacion_strings[pos_chromosoma][gen] == '1' else '1'
+
+    return poblacion_strings
+
+def mutacion(poblacion_strings:list):
+    """Funcion que apartir de los ultimos 5 elementos de la poblacion realiza mutacion, eligiendo dos individuos al azar, para mutar dos o solo un gen dependiendo de un numero aleatorio generado
+
+    Args:
+        poblacion_strings (list): Lista de cromosomas en formato list
+
+    Returns:
+        list: Lista de cromosomas con los cromosomas mutados en formato list
+    """
+    # Seleccionamos aleatoriamente dos posiciones de cromosomas de la poblacion
+    for i in range(2):
+        # Mutamos el cromosoma
+        poblacion_strings = mutar(random.randint(0, 4), poblacion_strings)
+
+    return poblacion_strings
 
 def encuentra_optimo(cromosoma1, cromosoma2,  num_gen): 
     #verifica si los cromosomas tienen una cantidad de '0' igual a la longitud de la lista 
@@ -84,7 +125,10 @@ def main(num_crom, num_gen):
     
     poblacion = ordenar_poblacion(poblacion_inicial)
     poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
-
+    # Aplicamos mutación a la ultima mitad de la población
+    poblacion = mutacion(poblacion[5:]) + poblacion[:5]
+    # Ordenamos la población
+    poblacion = ordenar_poblacion(poblacion)
     count = 0
     optimo_encontrado = False
     while True: 
@@ -98,6 +142,10 @@ def main(num_crom, num_gen):
         poblacion = ordenar_poblacion(poblacion)
         # Cruzamos la población ordenada 
         poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
+        # Aplicamos mutación a la ultima mitad de la población
+        poblacion = mutacion(poblacion[5:]) + poblacion[:5]
+        # Ordenamos la población
+        poblacion = ordenar_poblacion(poblacion)
         """print("optimos")
         print(cromosoma_optimo_1)
         print(cromosoma_optimo_2)
