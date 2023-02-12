@@ -64,6 +64,22 @@ def encuentra_optimo(cromosoma1, cromosoma2,  num_gen):
 
     return optimo_encontrado
 
+def poblacion_optima(poblacion_strings):
+    """Funcion que verifica si todos los chromosomas de la poblacion son optimos
+
+    Args:
+        poblacion_strings (list): Lista de cromosomas en formato list
+
+    Returns:
+        bool: True si la poblacion es optima, False en caso contrario
+    """
+    n_pob_optima = 0
+    for chromosoma in poblacion_strings:
+        if chromosoma.count('0') == len(chromosoma):
+            n_pob_optima += 1
+    
+    return True if n_pob_optima == len(poblacion_strings) else False
+
 def ordenar_poblacion(poblacion_strings):
     """Funcion que ordena la poblacion de mayor a menor
     conforme al numero de ceros que contenga cada cromosoma"""
@@ -134,8 +150,9 @@ def main(num_crom, num_gen):
     while True: 
         # Verificamos si el cromosoma de sólo 0 es encontrado 
         # Si lo encontramos, se detiene el while, sino, continua 
-        optimo_encontrado = encuentra_optimo(cromosoma_optimo_1, cromosoma_optimo_2, num_gen)
-        if count == 249 or optimo_encontrado == True: 
+        optimo_encontrado = poblacion_optima(poblacion)
+        # optimo_encontrado = encuentra_optimo(cromosoma_optimo_1, cromosoma_optimo_2, num_gen)
+        if count == 10000 or optimo_encontrado == True: 
             break
 
         # Ordenamos la nueva población creada del previo cruzamiento 
