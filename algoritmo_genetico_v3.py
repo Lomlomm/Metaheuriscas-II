@@ -20,7 +20,7 @@ def elegirMejores(*args):
     #print(ordenado)
 
     # Asignamos los primeros 6 cromosomas de la lista ordenada a las variables de mejores cromosomas 
-    for i in range(6):
+    for i in range(2):
         mejores_cromosomas.append(ordenado[i])
     
     return mejores_cromosomas
@@ -46,10 +46,12 @@ def cruzamiento_aleatorio(poblacion_strings:list):
 
     # Convertimos en lista la población de strings
     poblacion_strings = list(poblacion_strings)
-
-    nueva_poblacion = []
+    
+    optimos = []
 
     for i in range(3):
+        
+        nueva_poblacion = []
 
         n_chromosomes = len(poblacion_strings)
 
@@ -68,13 +70,16 @@ def cruzamiento_aleatorio(poblacion_strings:list):
         nueva_poblacion.append(cromosoma_hijo_1)
         nueva_poblacion.append(cromosoma_hijo_2)
 
-    # Evaluamos y tomamos los dos mejores cromosomas de ambos pares
-    #print(nueva_poblacion)
-    cromosomas_optimos = elegirMejores(tuple(nueva_poblacion))
+        # Evaluamos y tomamos los dos mejores cromosomas de ambos pares
+        #print(nueva_poblacion)
+        cromosomas_optimos = elegirMejores(tuple(nueva_poblacion))
     
-    # Acomodamos los cromosomas más óptimos en las primers posiciones
-    for i in range(len(cromosomas_optimos)):
-        poblacion_strings.append(cromosomas_optimos[i])
+        # Acomodamos los cromosomas más óptimos en las primers posiciones
+        for i in range(len(cromosomas_optimos)):
+            optimos.append(cromosomas_optimos[i])
+
+    for i in range(len(optimos)):
+        poblacion_strings.append(optimos[i])
 
 
     #Regresamos la nueva población con los cruzamientos aplicados, y los valores 4 y 5
@@ -105,7 +110,7 @@ def main(num_crom, num_gen):
             break
 
         # Ordenamos la nueva población creada del previo cruzamiento 
-        poblacion = ordenar_poblacion(poblacion_inicial)
+        poblacion = ordenar_poblacion(poblacion)
         # Cruzamos la población ordenada 
         poblacion, cromosoma_optimo_1, cromosoma_optimo_2 = cruzamiento_aleatorio(poblacion)
         """print("optimos")
@@ -114,7 +119,10 @@ def main(num_crom, num_gen):
         print(poblacion)"""
         count += 1  
         
-    print(poblacion)
+    
+    poblacion = ordenar_poblacion(poblacion)
+    for i in range(len(poblacion)):
+        print(poblacion[i])
     print(f"Generacion: {count}")
 
 
