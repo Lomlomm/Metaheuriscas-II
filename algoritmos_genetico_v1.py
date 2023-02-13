@@ -20,7 +20,11 @@ def main(num_crom, num_gen):
         poblacion_inicial.append(cromosoma)
     nueva_poblacion = crear_nueva_poblacion(poblacion_inicial)
     poblacion_cadena = crear_cadena(nueva_poblacion)
-    print(poblacion_cadena)
+    for i, cromosoma in enumerate(poblacion_cadena): 
+        if i == 9: 
+            print(f"{i+1}    -     {cromosoma}")
+        else: 
+            print(f"{i+1}     -     {cromosoma}")
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(
