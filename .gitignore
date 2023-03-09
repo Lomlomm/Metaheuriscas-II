@@ -174,3 +174,5 @@ poetry.toml
 
 # Examenes
 examenes/
+
+.vscode/

@@ -118,23 +118,15 @@ def main(num_crom, num_gen):
         print(cromosoma_optimo_2)
         print(poblacion)"""
         count += 1  
-<<<<<<< HEAD
-        
-    
-    poblacion = ordenar_poblacion(poblacion)
-    for i in range(len(poblacion)):
-        print(poblacion[i])
-=======
 
     poblacion = ordenar_poblacion(poblacion)  
     print(poblacion)
->>>>>>> c0a558697c880409e640edd2a51bbfbf1c622ae6
     print(f"Generacion: {count}")
 
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(
-        prog = 'AlgoritmoGenV1',
+        prog = 'AlgoritmoGenV3',
         description='First uncomplete version of a genetic algorithm')
     parser.add_argument('-numCromosoma', '-nc', type=int, default=10, help='Number of cromosomas for the population')
     parser.add_argument('-numGen', '-ng', type=int, default=10, help='Number of gens for each cromosoma')
