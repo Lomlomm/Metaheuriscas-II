@@ -53,6 +53,8 @@ def checkChrom(numbers):
         return False
     elif ones < 4:
         return False
+    elif sum(numbers) != 10:
+        return False
     else:
         return True
 
@@ -84,7 +86,7 @@ def crear_poblacion(num_cromo:int, num_gen:int):
             # Get the value of the function
             value = fun_obj(chromosoma["sum"])
             # Get the fitness of the cromosoma
-            chromosoma["fitness"] = abs(data2[chromosoma["max"]] - value)
+            chromosoma["fitness"] = abs(data2[chromosoma["max"]] - chromosoma["sum"])
             # Check if the cromosoma is valid
             if checkChrom(chromosoma["numbers"]):
                 # If the cromosoma is valid, add it to the population
