@@ -31,6 +31,11 @@ def getNumbers(cromosoma):
     Returns:
         list: List of numbers represented by the binary cromosoma
     """        
+    # Cuando se pasa una lista en vez de un string lo convertimos a un solo string
+    if type(cromosoma) == list:
+        cromosoma = ''.join(cromosoma)
+
+    
     numbers = []
     for i in range(0, len(cromosoma), 3):
         numbers.append(int(cromosoma[i:i+3], 2))
@@ -45,6 +50,7 @@ def checkChrom(numbers):
     Returns:
         bool: True if the cromosoma is valid, False if not
     """    
+    
     ones = 0
     for num in numbers:
         if num >= 1:
@@ -136,40 +142,62 @@ def cruzamiento_aleatorio(poblacion_dictionary:list):
         # Verificamos si se continua con el cruzamiento
         pcruz_rand = random.randint(0,100)
         
-        if pcruz_rand <= 80:
+        if pcruz_rand <= 90:
 
+            band_valido = False
             print("si cruza")
-            nueva_poblacion = []
-            n_chromosomes = len(poblacion_strings)
 
-            # Tomamos los dos cromosomas padres 
-            cromosoma1 = poblacion_strings.pop(random.randint(0, n_chromosomes - 1))
-            cromosoma2 = poblacion_strings.pop(random.randint(0, n_chromosomes - 2))
+            # Para verificar que sean válidos los cromosomas hacemos un while
+            while band_valido == False:
+                nueva_poblacion = []
+                n_chromosomes = len(poblacion_strings)
 
-            punto_corte = random.randint(1, len(cromosoma1)-2)
-            # Generamos los cromosomas hijos a partir del cruzamiento a un punto aleatorio
-            cromosoma_hijo_1 = cromosoma1[punto_corte:] + cromosoma2[:punto_corte]
-            cromosoma_hijo_2 = cromosoma2[punto_corte:] + cromosoma1[:punto_corte]
+                # Tomamos los dos cromosomas padres 
+                cromosoma1 = poblacion_strings.pop(random.randint(0, n_chromosomes - 1))
+                cromosoma2 = poblacion_strings.pop(random.randint(0, n_chromosomes - 2))
 
-            # Juntamos padres e hijo para evaluarlos
-            nueva_poblacion.append(cromosoma1)
-            nueva_poblacion.append(cromosoma2)
-            nueva_poblacion.append(cromosoma_hijo_1)
-            nueva_poblacion.append(cromosoma_hijo_2)
+                punto_corte = random.randint(1, len(cromosoma1)-2)
+                # Generamos los cromosomas hijos a partir del cruzamiento a un punto aleatorio
+                cromosoma_hijo_1 = cromosoma1[punto_corte:] + cromosoma2[:punto_corte]
+                cromosoma_hijo_2 = cromosoma2[punto_corte:] + cromosoma1[:punto_corte]
 
-            # Evaluamos y tomamos los dos mejores cromosomas de ambos pares
-            #print(nueva_poblacion)
-            cromosomas_optimos = elegirMejores(tuple(nueva_poblacion))
-        
-            # Acomodamos los cromosomas más óptimos en las primers posiciones
-            for i in range(len(cromosomas_optimos)):
-                poblacion_strings.append(cromosomas_optimos[i])
-        
+                # Juntamos padres e hijo para evaluarlos
+                nueva_poblacion.append(cromosoma1)
+                nueva_poblacion.append(cromosoma2)
+                nueva_poblacion.append(cromosoma_hijo_1)
+                nueva_poblacion.append(cromosoma_hijo_2)
+
+                # Evaluamos y tomamos los dos mejores cromosomas de ambos pares
+                #print(nueva_poblacion)
+                cromosomas_optimos = elegirMejores(tuple(nueva_poblacion))
+
+                # Evaluamos que los dos mejores sean válidos
+
+                # Primero obtenemos los numeros del cromosoma
+                numbers0 = getNumbers(cromosomas_optimos[0])
+                numbers1 = getNumbers(cromosomas_optimos[1])
+                band_valido = checkChrom(numbers0) and checkChrom(numbers1)
+
+                # Si son válidos los agrega a la población
+                if band_valido == True:
+                    # Acomodamos los cromosomas más óptimos en las primers posiciones
+                    for i in range(len(cromosomas_optimos)):
+                        poblacion_strings.append(cromosomas_optimos[i])
+            
+                # Si no lo son agregamos los que estaban al principio
+                elif band_valido == False:
+                    # Acomodamos los cromosomas en las primers posiciones
+                    poblacion_strings.append(cromosoma1)
+                    poblacion_strings.append(cromosoma2)
+           
         else:
             print("no cruza")
         
-    # revisar que sean validos
-    # cambiar la evaluacion de elegirMejores
+    # Cambiar la evaluacion de elegirMejores
+
+    # Agregar función de mutación, pensaba que para evitar que sigan cambiando
+    # mucho y que se pierdan los optimos hacer una probabilidad de mutación que
+    # sea muy baja tipo menor al 5% pa que no afecte tanto
 
 
     #Regresamos la nueva población con los cruzamientos aplicados, y los valores 4 y 5
